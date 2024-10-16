@@ -18,27 +18,28 @@
         android:layout_height="80dp"
         android:layout_alignParentBottom="true"
         app:cardCornerRadius="10dp"
-        app:cardElevation="20dp">
+        app:cardElevation="50dp">
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/inputFieldLayout"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="15dp"
-                android:layout_alignParentBottom="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignEnd="@+id/btnAddTarefa">
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginVertical="10dp"
+                app:layout_constraintEnd_toStartOf="@+id/btnAddTarefa"
+                app:layout_constraintStart_toStartOf="parent"
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/inputField"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    />
+                    android:hint="Descreva a tarefa aqui..."/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -46,9 +47,16 @@
                 android:id="@+id/btnAddTarefa"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"/>
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/inputFieldLayout"
+                android:src="@mipmap/ic_btn_add_tarefa"
+                android:backgroundTint="@color/light_blue"/>
 
-        </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
 
