@@ -9,8 +9,11 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 public class MainActivity extends AppCompatActivity {
+
+    private TarefaRoomDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,9 +21,13 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
+        db = Room.databaseBuilder(getApplicationContext(), TarefaRoomDatabase.class, "tarefa_database")
+                .allowMainThreadQueries()
+                .build();
+
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new MyAdapter(getApplicationContext(), List<Tarefa> tarefas));
+        recyclerView.setAdapter(new MyAdapter(getApplicationContext(), List<Tarefa>tarefas));
     }
 }
