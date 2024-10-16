@@ -10,15 +10,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MyViewHolder extends RecyclerView.ViewHolder {
 
-    //talvez seja necessário acrescentar o cardview
     CheckBox checkbox;
     TextView textView;
     ImageButton imageButton;
 
-    public MyViewHolder(@NonNull View itemView) {
+    public MyViewHolder(View itemView) {
         super(itemView);
         checkbox = itemView.findViewById(R.id.checkboxTarefa);
         textView = itemView.findViewById(R.id.descTarefa);
         imageButton = itemView.findViewById(R.id.btnDeleteTarefa);
     }
+
 }
