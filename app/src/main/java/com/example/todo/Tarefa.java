@@ -17,9 +17,9 @@ public class Tarefa implements Serializable {
     @ColumnInfo(name = "concluida")
     private boolean concluida;
 
-    public Tarefa(@NonNull String descricao, boolean concluida) {
+    public Tarefa(@NonNull String descricao) {
         this.descricao = descricao;
-        this.concluida = concluida;
+        this.concluida = false;
     }
 
     public void setDescricao(@NonNull String descricao) {

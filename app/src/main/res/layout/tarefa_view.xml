@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="80dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="12dp"
     android:layout_marginHorizontal="8dp"
-    android:layout_marginTop="8dp">
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="10dp">
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        android:paddingBottom="10dp">
 
         <CheckBox
             android:id="@+id/checkboxTarefa"
@@ -27,14 +29,19 @@
             android:layout_toEndOf="@id/checkboxTarefa"
             android:layout_toStartOf="@id/btnDeleteTarefa"
             android:layout_centerVertical="true"
-            android:text="descicaoPlaceHolder"/>
+            android:text="descricaoPlaceHolder"
+            android:textSize="20sp"
+
+            android:maxLines="1"
+            android:ellipsize="end"/>
         
         <ImageButton
             android:id="@+id/btnDeleteTarefa"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
             android:src="@drawable/ic_delete_foreground"
             android:background="@drawable/delete_round_button_backgroun"
             android:scaleType="fitCenter"

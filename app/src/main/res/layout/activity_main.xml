@@ -7,15 +7,79 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:layout_marginTop="25dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputFiltrosLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputFiltros"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:singleLine="true"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btnToDo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="To do"
+                app:layout_constraintStart_toStartOf="@+id/inputFiltrosLayout"
+                app:layout_constraintEnd_toStartOf="@+id/btnDone"
+                app:layout_constraintTop_toBottomOf="@+id/inputFiltrosLayout"
+                app:layout_constraintWidth_percent="0.25"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/light_blue"/>
+
+            <Button
+                android:id="@+id/btnDone"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Done"
+                app:layout_constraintStart_toEndOf="@+id/btnToDo"
+                app:layout_constraintEnd_toStartOf="@+id/btnAll"
+                app:layout_constraintTop_toBottomOf="@+id/inputFiltrosLayout"
+                app:layout_constraintWidth_percent="0.25"
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="8dp"
+                android:backgroundTint="@color/light_blue"/>
+
+            <Button
+                android:id="@+id/btnAll"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="All"
+                app:layout_constraintStart_toEndOf="@+id/btnDone"
+                app:layout_constraintEnd_toEndOf="@+id/inputFiltrosLayout"
+                app:layout_constraintTop_toBottomOf="@+id/inputFiltrosLayout"
+                app:layout_constraintWidth_percent="0.25"
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="8dp"
+                android:backgroundTint="@color/light_blue"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/tarefa_view"/>
+        tools:listitem="@layout/tarefa_view"
+        android:layout_below="@+id/header"
+        android:layout_above="@+id/cardAdd" />
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardAdd"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="100dp"
         android:layout_alignParentBottom="true"
         app:cardCornerRadius="10dp"
         app:cardElevation="50dp">
@@ -27,19 +91,21 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/inputFieldLayout"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentStart="true"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginVertical="10dp"
                 app:layout_constraintEnd_toStartOf="@+id/btnAddTarefa"
                 app:layout_constraintStart_toStartOf="parent"
-                >
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/inputField"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="Descreva a tarefa aqui..."/>
+                    android:layout_height="wrap_content"
+                    android:hint="Descreva a tarefa aqui..."
+                    android:singleLine="true"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
