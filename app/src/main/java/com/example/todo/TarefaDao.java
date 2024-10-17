@@ -30,4 +30,7 @@ public interface TarefaDao {
 
     @Query("SELECT * FROM tarefa_table WHERE concluida like 0")
     LiveData<List<Tarefa>> buscarInconcluidas();
+
+    @Query("SELECT * FROM tarefa_table WHERE `desc` LIKE '%' || :query || '%'")
+    LiveData<List<Tarefa>> buscarFiltradas(String query);
 }

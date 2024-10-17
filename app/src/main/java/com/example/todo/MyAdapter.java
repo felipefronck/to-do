@@ -17,7 +17,7 @@ import java.util.List;
 public class MyAdapter extends RecyclerView.Adapter<MyViewHolder>{
 
     private final Context context;
-    private final List<Tarefa> tarefas;
+    private List<Tarefa> tarefas;
 
     public MyAdapter(Context context, List<Tarefa> tarefas) {
         this.context = context;
@@ -52,6 +52,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder>{
             notifyItemRemoved(position);
             notifyItemRangeChanged(position, tarefas.size());
         });
+    }
+
+    public void atualizaLista(List<Tarefa> listaFiltrada){
+        if(listaFiltrada != null){
+            tarefas.clear();
+            tarefas.addAll(listaFiltrada);
+            notifyDataSetChanged();
+        }
     }
 
     public void verificaConclusao(Tarefa tarefa, MyViewHolder holder){
