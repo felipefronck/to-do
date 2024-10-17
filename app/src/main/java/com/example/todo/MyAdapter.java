@@ -48,9 +48,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder>{
         });
 
         holder.imageButton.setOnClickListener(view -> {
-            tarefas.remove(position);
-            notifyItemRemoved(position);
-            notifyItemRangeChanged(position, tarefas.size());
+            deletaItem(position);
         });
     }
 
@@ -78,6 +76,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder>{
         } else {
             holder.textView.setPaintFlags(holder.textView.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
         }
+    }
+
+    public void deletaItem(int position){
+        tarefas.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, tarefas.size());
     }
 
     @Override

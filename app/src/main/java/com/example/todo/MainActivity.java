@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         tarefas = new ArrayList<>();
         adapter = new MyAdapter(getApplicationContext(), tarefas);
         recyclerView.setAdapter(adapter);
+        
 
         filtro.addTextChangedListener(new TextWatcher() {
             @Override
@@ -76,7 +77,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    void addTarefa(TextInputEditText descTarefaInput, TarefaDao tarefaDao){
+//    public void iniciaLista(){
+//        tarefaDao.buscarTodas().observe(this, tarefas1 -> {
+//            adapter.atualizaLista(tarefas);
+//        });
+//    }
+
+    public void addTarefa(TextInputEditText descTarefaInput, TarefaDao tarefaDao){
         String descricaoTarefa = descTarefaInput.getText().toString();
         if(!descricaoTarefa.isEmpty()) {
             Tarefa novaTarefa = new Tarefa(descricaoTarefa);
