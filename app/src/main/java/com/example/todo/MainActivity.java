@@ -8,10 +8,12 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -33,9 +35,7 @@ public class MainActivity extends AppCompatActivity {
         TarefaDao tarefaDao = db.tarefaDao();
 
         TextInputEditText filtro = findViewById(R.id.inputFiltros);
-        Button btnToDo = findViewById(R.id.btnToDo);
-        Button btnDone = findViewById(R.id.btnDone);
-        Button btnAll = findViewById(R.id.btnAll);
+        ChipGroup chipGroup = findViewById(R.id.chipGroup);
 
         TextInputEditText descTarefaInput = findViewById(R.id.inputField);
         FloatingActionButton btnAddTarefa = findViewById(R.id.btnAddTarefa);
@@ -46,26 +46,49 @@ public class MainActivity extends AppCompatActivity {
         tarefas = new ArrayList<>();
         adapter = new MyAdapter(getApplicationContext(), tarefas);
         recyclerView.setAdapter(adapter);
-        
-
+//        inicializa lista persistida
+        iniciaLista(tarefaDao);
+//        inicializa textwatcher no campo de filtros
         filtro.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
-
+//            se houver mudança...
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String query = charSequence.toString();
 
                 tarefaDao.buscarFiltradas(query).observe(MainActivity.this, listaFiltrada -> {
-                    adapter.atualizaLista(listaFiltrada);
+                    adapter.filtraLista(listaFiltrada);
                 });
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
 
+            }
+        });
+
+        chipGroup.setOnCheckedChangeListener(new ChipGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(@NonNull ChipGroup group, int checkedId) {
+                if(checkedId == R.id.btnToDo){
+//                    tarefaDao.buscarInconcluidas().removeObservers(MainActivity.this);
+                    tarefaDao.buscarInconcluidas().observe(MainActivity.this, listaToDo -> {
+                        adapter.filtraLista(listaToDo);
+                    });
+                } else if(checkedId == R.id.btnDone){
+//                    tarefaDao.buscarConcluidas().removeObservers(MainActivity.this);
+                    tarefaDao.buscarConcluidas().observe(MainActivity.this, listaConcluidas -> {
+                        adapter.filtraLista(listaConcluidas);
+                    });
+                } else if(checkedId == R.id.btnAll){
+//                    tarefaDao.buscarTodas().removeObservers(MainActivity.this);
+                    tarefaDao.buscarTodas().observe(MainActivity.this, listaTodas -> {
+                        adapter.filtraLista(listaTodas);
+                    });
+                }
             }
         });
 
@@ -77,11 +100,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-//    public void iniciaLista(){
-//        tarefaDao.buscarTodas().observe(this, tarefas1 -> {
-//            adapter.atualizaLista(tarefas);
-//        });
-//    }
+    public void iniciaLista(TarefaDao tarefaDao){
+        tarefaDao.buscarTodas().observe(MainActivity.this, tarefas -> {
+            adapter.filtraLista(tarefas);
+        });
+    }
 
     public void addTarefa(TextInputEditText descTarefaInput, TarefaDao tarefaDao){
         String descricaoTarefa = descTarefaInput.getText().toString();

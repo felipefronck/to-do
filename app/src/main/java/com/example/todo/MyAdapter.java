@@ -1,16 +1,12 @@
 package com.example.todo;
 
-import static java.nio.file.Files.size;
-
 import android.content.Context;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,10 +14,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder>{
 
     private final Context context;
     private List<Tarefa> tarefas;
+    private TarefaDao tarefadao;
 
     public MyAdapter(Context context, List<Tarefa> tarefas) {
         this.context = context;
         this.tarefas = tarefas;
+
+        TarefaRoomDatabase db = TarefaRoomDatabase.getDatabase(context);
+        tarefadao = db.tarefaDao();
     }
 
     @NonNull
@@ -52,7 +52,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder>{
         });
     }
 
-    public void atualizaLista(List<Tarefa> listaFiltrada){
+    public void filtraLista(List<Tarefa> listaFiltrada){
         if(listaFiltrada != null){
             tarefas.clear();
             tarefas.addAll(listaFiltrada);
@@ -79,6 +79,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder>{
     }
 
     public void deletaItem(int position){
+        Tarefa tarefa = tarefas.get(position);
+
+        TarefaRoomDatabase.databaseWriteExecutor.execute(() -> {
+            tarefadao.deletarTarefa(tarefa);
+        });
+
         tarefas.remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, tarefas.size());

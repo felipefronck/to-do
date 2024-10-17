@@ -16,55 +16,60 @@
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/inputFiltrosLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:boxStrokeWidth="0dp"
+            app:boxBackgroundColor="@color/white"
+            app:boxCornerRadiusBottomEnd="40dp"
+            app:boxCornerRadiusBottomStart="40dp"
+            app:boxCornerRadiusTopEnd="40dp"
+            app:boxCornerRadiusTopStart="40dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/inputFiltros"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:singleLine="true"/>
+                android:singleLine="true"/> <!--drawable resolver-->
+<!--                android:drawableStart="@drawable/ic_lupa_custom"-->
+<!--                android:drawablePadding="8dp"/>-->
 
         </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
-                android:id="@+id/btnToDo"
-                android:layout_width="0dp"
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroup"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="To do"
-                app:layout_constraintStart_toStartOf="@+id/inputFiltrosLayout"
-                app:layout_constraintEnd_toStartOf="@+id/btnDone"
-                app:layout_constraintTop_toBottomOf="@+id/inputFiltrosLayout"
-                app:layout_constraintWidth_percent="0.25"
-                android:layout_marginHorizontal="8dp"
-                android:layout_marginTop="8dp"
-                android:backgroundTint="@color/light_blue"/>
+                app:layout_constraintTop_toBottomOf="@id/inputFiltrosLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:singleSelection="true"
+                app:chipSpacing="8dp"
+                app:selectionRequired="true">
 
-            <Button
-                android:id="@+id/btnDone"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Done"
-                app:layout_constraintStart_toEndOf="@+id/btnToDo"
-                app:layout_constraintEnd_toStartOf="@+id/btnAll"
-                app:layout_constraintTop_toBottomOf="@+id/inputFiltrosLayout"
-                app:layout_constraintWidth_percent="0.25"
-                android:layout_marginTop="8dp"
-                android:layout_marginHorizontal="8dp"
-                android:backgroundTint="@color/light_blue"/>
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/btnToDo"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="To do"/>
 
-            <Button
-                android:id="@+id/btnAll"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="All"
-                app:layout_constraintStart_toEndOf="@+id/btnDone"
-                app:layout_constraintEnd_toEndOf="@+id/inputFiltrosLayout"
-                app:layout_constraintTop_toBottomOf="@+id/inputFiltrosLayout"
-                app:layout_constraintWidth_percent="0.25"
-                android:layout_marginTop="8dp"
-                android:layout_marginHorizontal="8dp"
-                android:backgroundTint="@color/light_blue"/>
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/btnDone"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Done"
+                    />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/btnAll"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="All"
+                    android:checked="true"/>
+
+            </com.google.android.material.chip.ChipGroup>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -74,7 +79,7 @@
         android:layout_height="wrap_content"
         tools:listitem="@layout/tarefa_view"
         android:layout_below="@+id/header"
-        android:layout_above="@+id/cardAdd" />
+        android:layout_above="@+id/cardAdd"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardAdd"
@@ -119,8 +124,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/inputFieldLayout"
-                android:src="@mipmap/ic_btn_add_tarefa"
-                android:backgroundTint="@color/light_blue"/>
+                android:src="@mipmap/ic_btn_add_tarefa"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
