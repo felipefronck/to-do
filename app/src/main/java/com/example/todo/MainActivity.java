@@ -44,17 +44,37 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         tarefas = new ArrayList<>();
+
         adapter = new MyAdapter(getApplicationContext(), tarefas);
         recyclerView.setAdapter(adapter);
-//        inicializa lista persistida
+
         iniciaLista(tarefaDao);
-//        inicializa textwatcher no campo de filtros
+
+        chipGroup.setOnCheckedChangeListener(new ChipGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(@NonNull ChipGroup group, int checkedId) {
+                if(checkedId == R.id.btnToDo){
+                    tarefaDao.buscarInconcluidas().observe(MainActivity.this, listaToDo -> {
+                        adapter.filtraLista(listaToDo);
+                    });
+                } else if(checkedId == R.id.btnDone){
+                    tarefaDao.buscarConcluidas().observe(MainActivity.this, listaConcluidas -> {
+                        adapter.filtraLista(listaConcluidas);
+                    });
+                } else if(checkedId == R.id.btnAll){
+                    tarefaDao.buscarTodas().observe(MainActivity.this, listaTodas -> {
+                        adapter.filtraLista(listaTodas);
+                    });
+                }
+            }
+        });
+
         filtro.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
-//            se houver mudança...
+
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String query = charSequence.toString();
@@ -67,28 +87,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
 
-            }
-        });
-
-        chipGroup.setOnCheckedChangeListener(new ChipGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(@NonNull ChipGroup group, int checkedId) {
-                if(checkedId == R.id.btnToDo){
-//                    tarefaDao.buscarInconcluidas().removeObservers(MainActivity.this);
-                    tarefaDao.buscarInconcluidas().observe(MainActivity.this, listaToDo -> {
-                        adapter.filtraLista(listaToDo);
-                    });
-                } else if(checkedId == R.id.btnDone){
-//                    tarefaDao.buscarConcluidas().removeObservers(MainActivity.this);
-                    tarefaDao.buscarConcluidas().observe(MainActivity.this, listaConcluidas -> {
-                        adapter.filtraLista(listaConcluidas);
-                    });
-                } else if(checkedId == R.id.btnAll){
-//                    tarefaDao.buscarTodas().removeObservers(MainActivity.this);
-                    tarefaDao.buscarTodas().observe(MainActivity.this, listaTodas -> {
-                        adapter.filtraLista(listaTodas);
-                    });
-                }
             }
         });
 
