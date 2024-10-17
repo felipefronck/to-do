@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void iniciaLista(TarefaDao tarefaDao){
-        tarefaDao.buscarTodas().observe(MainActivity.this, tarefas -> {
+        tarefaDao.buscarTodas().observe(this, tarefas -> {
             adapter.filtraLista(tarefas);
         });
     }

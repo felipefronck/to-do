@@ -16,7 +16,7 @@ public abstract class TarefaRoomDatabase extends RoomDatabase {
     private static volatile TarefaRoomDatabase instance;
     static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(4);
 
-    static TarefaRoomDatabase getDatabase(final Context context){
+    public static TarefaRoomDatabase getDatabase(final Context context){
         if(instance == null){
             synchronized (TarefaRoomDatabase.class){
                 if(instance == null){

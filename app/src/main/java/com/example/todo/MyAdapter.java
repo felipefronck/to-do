@@ -2,6 +2,7 @@ package com.example.todo;
 
 import android.content.Context;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -55,9 +56,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder>{
     public void alteraChecked(Tarefa tarefa, Boolean checked, MyViewHolder holder){
         tarefa.setConcluida(checked);
 
-        new Thread(() -> {
+        TarefaRoomDatabase.databaseWriteExecutor.execute(() -> {
             tarefaDao.updateTarefa(tarefa);
-        }).start();
+        });
 
         identaConclusao(tarefa, holder);
     }
@@ -79,7 +80,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder>{
 
         tarefas.remove(position);
         notifyItemRemoved(position);
-        notifyItemRangeChanged(position, tarefas.size());
+//        notifyItemRangeChanged(position, tarefas.size());
     }
 
     public void filtraLista(List<Tarefa> listaFiltrada){
