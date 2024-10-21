@@ -23,14 +23,20 @@ public interface TarefaDao {
     void updateTarefa(Tarefa tarefa);
 
     @Query("SELECT * FROM tarefa_table")
-    LiveData<List<Tarefa>> buscarTodas();
+    List<Tarefa> buscarTodas();
 
     @Query("SELECT * FROM tarefa_table WHERE concluida = 1")
-    LiveData<List<Tarefa>> buscarConcluidas();
+    List<Tarefa> buscarConcluidas();
 
     @Query("SELECT * FROM tarefa_table WHERE concluida = 0")
-    LiveData<List<Tarefa>> buscarInconcluidas();
+    List<Tarefa>buscarInconcluidas();
 
     @Query("SELECT * FROM tarefa_table WHERE `desc` LIKE '%' || :query || '%'")
-    LiveData<List<Tarefa>> buscarFiltradas(String query);
+    List<Tarefa> buscarFiltradas(String query);
+
+    @Query("SELECT * FROM tarefa_table WHERE concluida = 1 AND `desc` LIKE '%' || :query || '%'")
+    List<Tarefa> buscarConcluidasQuery(String query);
+
+    @Query("SELECT * FROM tarefa_table WHERE concluida = 0 AND `desc` LIKE '%' || :query || '%'")
+    List<Tarefa>buscarInconcluidasQuery(String query);
 }

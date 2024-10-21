@@ -2,7 +2,6 @@ package com.example.todo;
 
 import android.content.Context;
 import android.graphics.Paint;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -10,19 +9,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class MyAdapter extends RecyclerView.Adapter<MyViewHolder>{
 
     private final Context context;
     private List<Tarefa> tarefas;
-    private TarefaDao tarefaDao;
+    private TarefaRoomDatabase tarefaDb;
 
-    public MyAdapter(Context context, List<Tarefa> tarefas) {
+    public MyAdapter(Context context, List<Tarefa> tarefas, TarefaRoomDatabase tarefaDb) {
         this.context = context;
         this.tarefas = tarefas;
-
-        TarefaRoomDatabase db = TarefaRoomDatabase.getDatabase(context);
-        tarefaDao = db.tarefaDao();
+        this.tarefaDb = tarefaDb;
     }
 
     @NonNull
@@ -56,8 +55,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder>{
     public void alteraChecked(Tarefa tarefa, Boolean checked, MyViewHolder holder){
         tarefa.setConcluida(checked);
 
-        TarefaRoomDatabase.databaseWriteExecutor.execute(() -> {
-            tarefaDao.updateTarefa(tarefa);
+        Executor executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            tarefaDb.tarefaDao().updateTarefa(tarefa);
         });
 
         identaConclusao(tarefa, holder);
@@ -74,13 +74,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder>{
     public void deletaItem(int position){
         Tarefa tarefa = tarefas.get(position);
 
-        TarefaRoomDatabase.databaseWriteExecutor.execute(() -> {
-            tarefaDao.deletarTarefa(tarefa);
+        Executor executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            tarefaDb.tarefaDao().deletarTarefa(tarefa);
         });
 
         tarefas.remove(position);
         notifyItemRemoved(position);
-//        notifyItemRangeChanged(position, tarefas.size());
+        notifyItemRangeChanged(position, tarefas.size());
     }
 
     public void filtraLista(List<Tarefa> listaFiltrada){

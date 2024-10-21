@@ -13,24 +13,4 @@ public abstract class TarefaRoomDatabase extends RoomDatabase {
 
     public abstract TarefaDao tarefaDao();
 
-    private static volatile TarefaRoomDatabase instance;
-    static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(4);
-
-    public static TarefaRoomDatabase getDatabase(final Context context){
-        if(instance == null){
-            synchronized (TarefaRoomDatabase.class){
-                if(instance == null){
-                    instance = Room.databaseBuilder(context.getApplicationContext(),
-                            TarefaRoomDatabase.class,
-                            "tarefa_database")
-                            .build();
-                }
-            }
-        }
-        return instance;
-    }
-
-    public static void destruirInstance() {
-        instance = null;
-    }
 }
