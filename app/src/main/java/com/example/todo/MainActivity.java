@@ -25,8 +25,6 @@ import java.util.concurrent.Executors;
 public class MainActivity extends AppCompatActivity {
 
     private List<Tarefa> tarefas = new ArrayList<>();
-    private List<Tarefa> listaInconcluidas = new ArrayList<>();;
-    private List<Tarefa> listaConcluidas = new ArrayList<>();;
     private MyAdapter adapter;
     private TarefaRoomDatabase tarefaDb;
     private TarefaDao tarefaDao;
@@ -60,22 +58,22 @@ public class MainActivity extends AppCompatActivity {
             aplicarFiltros(filtro.getText().toString(), checkedId);
         });
 
-                filtro.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        filtro.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
                     }
 
-                    @Override
-                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                        aplicarFiltros(charSequence.toString(), chipGroup.getCheckedChipId());
-                    }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                aplicarFiltros(charSequence.toString(), chipGroup.getCheckedChipId());
+            }
 
-                    @Override
-                    public void afterTextChanged(Editable editable) {
+            @Override
+            public void afterTextChanged(Editable editable) {
 
                     }
-                });
+        });
 
         btnAddTarefa.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
             });
         }).start();
     }
-
 
     public void addTarefa(TextInputEditText descTarefaInput, TarefaDao tarefaDao){
         String descricaoTarefa = descTarefaInput.getText().toString();

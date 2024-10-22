@@ -41,8 +41,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder>{
 
         holder.checkbox.setChecked(tarefa.isConcluida());
 
-        identaConclusao(tarefa, holder);
-
         holder.checkbox.setOnCheckedChangeListener((compoundButton, checked) -> {
             alteraChecked(tarefa, checked, holder);
         });
